@@ -1,0 +1,8 @@
+{
+    //"java.home": "C:\\Program Files\\Java\\jdk-17.0.2",
+    "java.jdt.ls.java.home": "C:\\Program Files\\Java\\jdk-17.0.2",
+    "java.jdt.ls.vmargs": "-Dfile.encoding=utf-8 -noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication",
+    "java.project.sourcePaths": [
+        "kyonggi/src"
+    ]
+}
