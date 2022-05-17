@@ -118,5 +118,15 @@ class StorageSpace { // 창고공간
         inventory.put(99, new product("[웹프로그래밍 입문서]", 10, 0.6));
         inventory.put(100, new product("[자료구조 입문서]", 10, 0.8));
     }
-    // 매소드는 추가예정
+    public boolean shipment(Order ord) { // 출하
+        if (inventory.get(ord.key).quantity > ord.quantity) { // 재고수량 >= 주문수량
+            inventory.get(ord.key).quantity -= ord.quantity; // 재고 삭감
+            ord.nextState(); // 출하됨 출력
+            return true; // 출하성공
+        }
+        else {
+            ord.sold_out(); // 품절됨 출력
+            return false; // 출하실패
+        }
+    }
 }

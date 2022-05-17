@@ -8,6 +8,7 @@ class State {
 
 class Order extends State {
     int orderNumber; // 주문번호
+    int key; // 상품식별번호
     String productName; // 상품명
     int quantity; // 주문수량
     String address; // 배송주소
@@ -15,12 +16,13 @@ class Order extends State {
     boolean rocketDelivery; // 로켓배송여부
     String orderState; // 주문상태
     int count; // process의 인덱스를 변경시키는 변수
-    public Order(int orderNumber, String productName, int quantity, String address, double weight, boolean rocketDelivery) {
+    public Order(int orderNumber, int key, StorageSpace store, String address, boolean rocketDelivery) {
         this.orderNumber = orderNumber;
-        this.productName = productName;
-        this.quantity = quantity;
+        this.key = key;    
+        this.productName = store.inventory.get(key).productName;
+        this.quantity = store.inventory.get(key).quantity;
         this.address = address;
-        this.totalWeight = weight * quantity;
+        this.totalWeight = ( store.inventory.get(key).weight )*(this.quantity);
         this.rocketDelivery = rocketDelivery;
         this.count = 1;
         this.orderState = State.process[count];
@@ -28,6 +30,11 @@ class Order extends State {
     public String nextState() { // 다음 주문상태로 전환
         this.orderState = State.process[++count];
         return this.orderState;
+    }
+    public String sold_out() { // 품절
+        this.orderState = State.process[--count];
+        return this.orderState;
+
     }
 }
 
