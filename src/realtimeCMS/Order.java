@@ -37,6 +37,3 @@ class Order extends State {
 
     }
 }
-
-
-
