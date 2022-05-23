@@ -6,7 +6,7 @@ import java.util.*;
 //주문을 지역 택배에 적재. 만약에 현재 트럭의 용량에 주문의 무게를 더한 값이 임계값을 넘는다면 잠시 대기시키기위해 주문을 스택에 적재
 class Pickup{
     Area area = new Area();
-    
+    //여기서 orders는 집화단계 클래스에서 처리가 끝나면 보낸 리스트를 받는 매개 객체입니다
     public void PickupOrder(ArrayList<Order> orders){// Area 클래스의 지역 택배 데이터를 불러온 뒤 무게 비교를 통해 들어온 주문들을 area클래스의 content에 저장할지, 대기 스택에 저장할지 판별
         int index=0;
         while(!orders.isEmpty()){
