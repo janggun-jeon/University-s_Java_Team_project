@@ -4,6 +4,26 @@ import java.util.*;
 
 
 //주문을 지역 택배에 적재. 만약에 현재 트럭의 용량에 주문의 무게를 더한 값이 임계값을 넘는다면 잠시 대기시키기위해 주문을 스택에 적재
+
+class PickUp extends Thread{
+    public static Stack<Order> TempSpace = new Stack<Order>();
+    public static Queue<Order> RecieveSpace = new LinkedList<Order>();
+    Area area;
+    PickUp{
+        area = new Area();
+    }
+
+
+
+    void run(){
+
+    }
+}
+
+
+
+
+
 class Pickup{
     Area area = new Area();
     //여기서 orders는 집화단계 클래스에서 처리가 끝나면 보낸 리스트를 받는 매개 객체입니다
@@ -58,7 +78,7 @@ class Pickup{
 
 
 class Area{  //택배 발송 지역 지정 클래스.  main에서 한번만 생성할 예정.
-    public final int maxstorage = 1000;
+    public static final int maxstorage = 1000;
     public static HashMap<String,AreaOrders > contents = new HashMap<String,AreaOrders>();
     public final String[] destination = {"지역1","지역2", "지역3", "지역4", "지역5", "지역6", "지역7", "지역8", "지역9"};//지역 종류는 나중에 지정
     Area(){
@@ -73,7 +93,7 @@ class AreaOrders{//택배 발송 지역 클래스에 적재될 요소
     ArrayList<Order> orders = new ArrayList<Order>();
 }
 
-class WaitingOrder{//택배 용량이 부족하면 잠시 물류를 대기시키기 위해 만든 클래스. 원래라면 각 배송지별로 다르게 대기시켜야 하지만 일단은 하나의 스택에 적재 후 꺼낼 때가 되면 주문 내 배송지 정보를 통해 다시 찾아감
-     public static Stack<Order> stack = new Stack<Order>();
+// class WaitingOrder{//택배 용량이 부족하면 잠시 물류를 대기시키기 위해 만든 클래스. 원래라면 각 배송지별로 다르게 대기시켜야 하지만 일단은 하나의 스택에 적재 후 꺼낼 때가 되면 주문 내 배송지 정보를 통해 다시 찾아감
+//      public static Stack<Order> stack = new Stack<Order>();
 
-}
+// }
