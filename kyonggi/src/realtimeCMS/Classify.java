@@ -30,7 +30,9 @@ public class Classify extends Thread {
     }
 
     private void SendOrder(ArrayList<Order> sendOrders){
-
+        synchronized(PickUp.Delay){
+            PickUp.RecieveSpace.add(sendOrders);
+        }
     }
     public void run(){
         ArrayList<Order> sendOrders;
@@ -44,7 +46,7 @@ public class Classify extends Thread {
             synchronized(Delay){
                 TFC.ChangeState();
             }
-                sleep(100000);
+                sleep(10000);
             }
             catch(InterruptedException e){return;}
         }
