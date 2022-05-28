@@ -13,12 +13,12 @@ public class Classify extends Thread {
     public static ArrayList<ClassifyData> ClassifyingOrder = new ArrayList<ClassifyData>(4);//arraylist에 현재 분류작업중인 주문들을 넣는다.
     private final Object Delay = new Object();
     private ClassifyData element;
-    ToolForClassifying TFC;
+    ToolsForClassifying TFC;
 
     Classify() {
         Thread.currentThread().setName("Classify");
         Thread.currentThread().setPriority(4);
-        TFC = new ToolForClassifying();
+        TFC = new ToolsForClassifying();
     }
 
     public void AddTempOrders(Order order){//객체 생성과 동시에 객체의 지연시간 계산, 지연시간 계산 방법: 지연시간 =  기본 지연시간 1+ 수량/3 +무게/5
@@ -62,7 +62,7 @@ class ClassifyData{//기본 데이터 속성. 지연시간과 주문을 가짐.
     }
 }
 
-class ToolForClassifying{//분류작업 클래스ee
+class ToolsForClassifying{//분류작업 클래스ee
     
     private static ArrayList<Order> ReturnOrder = new ArrayList<Order>();
 
