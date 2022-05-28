@@ -1,18 +1,21 @@
 package realtimeCMS;
+
+
 import java.lang.String;
 import java.util.*;
 
 
-class AreaOrders {//ÅÃ¹è ¹ß¼Û Áö¿ª Å¬·¡½º¿¡ ÀûÀçµÉ ¿ä¼Ò
+class AreaOrders {//íƒë°° ë°œì†¡ ì§€ì—­ í´ë˜ìŠ¤ì— ì ì¬ë  ìš”ì†Œ
     public int storage = 0;
     ArrayList<Order> orders = new ArrayList<Order>();
 }
 
 
-class Area{  //ÅÃ¹è ¹ß¼Û Áö¿ª ÁöÁ¤ Å¬·¡½º.  main¿¡¼­ ÇÑ¹ø¸¸ »ı¼ºÇÒ ¿¹Á¤.
+
+class Area{  //íƒë°° ë°œì†¡ ì§€ì—­ ì§€ì • í´ë˜ìŠ¤.  mainì—ì„œ í•œë²ˆë§Œ ìƒì„±í•  ì˜ˆì •.
     public static final int maxstorage = 25000;
     public static HashMap<String,AreaOrders > contents = new HashMap<String,AreaOrders>();
-    public static String destination[] = {"°­¼­","¿µµîÆ÷", "¼ÛÆÄ", "¼ººÏ", "¿ë»ê", "°­ºÏ", "¼­ÃÊ", "°­³²", "Á¾·Î", "¸¶Æ÷"}; //Áö¿ª Á¾·ù´Â ³ªÁß¿¡ ÁöÁ¤
+    public static String destination[] = {"ê°•ì„œ","ê´€ì•…", "ì†¡íŒŒ", "ì„±ë¶", "ìš©ì‚°", "ê°•ë¶", "ì„œì´ˆ", "ê°•ë‚¨", "ì¢…ë¡œ", "ë§ˆí¬"}; //ì§€ì—­ ì¢…ë¥˜ëŠ” ë‚˜ì¤‘ì— ì§€ì •
     Area(){
         for (String s: destination) {
             contents.put(s,new AreaOrders());
@@ -20,31 +23,31 @@ class Area{  //ÅÃ¹è ¹ß¼Û Áö¿ª ÁöÁ¤ Å¬·¡½º.  main¿¡¼­ ÇÑ¹ø¸¸ »ı¼ºÇÒ ¿¹Á¤.
     }
 }
 
-class WaitingOrder {//ÅÃ¹è ¿ë·®ÀÌ ºÎÁ·ÇÏ¸é Àá½Ã ¹°·ù¸¦ ´ë±â½ÃÅ°±â À§ÇØ ¸¸µç Å¬·¡½º. ¿ø·¡¶ó¸é °¢ ¹è¼ÛÁöº°·Î ´Ù¸£°Ô ´ë±â½ÃÄÑ¾ß ÇÏÁö¸¸ ÀÏ´ÜÀº ÇÏ³ªÀÇ ½ºÅÃ¿¡ ÀûÀç ÈÄ ²¨³¾ ¶§°¡ µÇ¸é ÁÖ¹® ³» ¹è¼ÛÁö Á¤º¸¸¦ ÅëÇØ ´Ù½Ã Ã£¾Æ°¨
+class WaitingOrder {//íƒë°° ìš©ëŸ‰ì´ ë¶€ì¡±í•˜ë©´ ì ì‹œ ë¬¼ë¥˜ë¥¼ ëŒ€ê¸°ì‹œí‚¤ê¸° ìœ„í•´ ë§Œë“  í´ë˜ìŠ¤. ì›ë˜ë¼ë©´ ê° ë°°ì†¡ì§€ë³„ë¡œ ë‹¤ë¥´ê²Œ ëŒ€ê¸°ì‹œì¼œì•¼ í•˜ì§€ë§Œ ì¼ë‹¨ì€ í•˜ë‚˜ì˜ ìŠ¤íƒì— ì ì¬ í›„ êº¼ë‚¼ ë•Œê°€ ë˜ë©´ ì£¼ë¬¸ ë‚´ ë°°ì†¡ì§€ ì •ë³´ë¥¼ í†µí•´ ë‹¤ì‹œ ì°¾ì•„ê°
     public static Stack<Order> stack = new Stack<Order>();
 }
 
-//ÁÖ¹®À» Áö¿ª ÅÃ¹è¿¡ ÀûÀç. ¸¸¾à¿¡ ÇöÀç Æ®·°ÀÇ ¿ë·®¿¡ ÁÖ¹®ÀÇ ¹«°Ô¸¦ ´õÇÑ °ªÀÌ ÀÓ°è°ªÀ» ³Ñ´Â´Ù¸é Àá½Ã ´ë±â½ÃÅ°±âÀ§ÇØ ÁÖ¹®À» ½ºÅÃ¿¡ ÀûÀç
-class Pickup {
+//ì£¼ë¬¸ì„ ì§€ì—­ íƒë°°ì— ì ì¬. ë§Œì•½ì— í˜„ì¬ íŠ¸ëŸ­ì˜ ìš©ëŸ‰ì— ì£¼ë¬¸ì˜ ë¬´ê²Œë¥¼ ë”í•œ ê°’ì´ ì„ê³„ê°’ì„ ë„˜ëŠ”ë‹¤ë©´ ì ì‹œ ëŒ€ê¸°ì‹œí‚¤ê¸°ìœ„í•´ ì£¼ë¬¸ì„ ìŠ¤íƒì— ì ì¬
+public class pickup {
     Area area = new Area();
-    //¿©±â¼­ orders´Â ÁıÈ­´Ü°è Å¬·¡½º¿¡¼­ Ã³¸®°¡ ³¡³ª¸é º¸³½ ¸®½ºÆ®¸¦ ¹Ş´Â ¸Å°³ °´Ã¼ÀÔ´Ï´Ù
-    public void PickupOrder(ArrayList<Order> orders){// Area Å¬·¡½ºÀÇ Áö¿ª ÅÃ¹è µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Â µÚ ¹«°Ô ºñ±³¸¦ ÅëÇØ µé¾î¿Â ÁÖ¹®µéÀ» areaÅ¬·¡½ºÀÇ content¿¡ ÀúÀåÇÒÁö, ´ë±â ½ºÅÃ¿¡ ÀúÀåÇÒÁö ÆÇº°
+    //ì—¬ê¸°ì„œ ordersëŠ” ì§‘í™”ë‹¨ê³„ í´ë˜ìŠ¤ì—ì„œ ì²˜ë¦¬ê°€ ëë‚˜ë©´ ë³´ë‚¸ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°›ëŠ” ë§¤ê°œ ê°ì²´ì…ë‹ˆë‹¤
+    public void PickupOrder(ArrayList<Order> orders){// Area í´ë˜ìŠ¤ì˜ ì§€ì—­ íƒë°° ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¨ ë’¤ ë¬´ê²Œ ë¹„êµë¥¼ í†µí•´ ë“¤ì–´ì˜¨ ì£¼ë¬¸ë“¤ì„ areaí´ë˜ìŠ¤ì˜ contentì— ì €ì¥í• ì§€, ëŒ€ê¸° ìŠ¤íƒì— ì €ì¥í• ì§€ íŒë³„
         int index=0;
         while(!orders.isEmpty()) {
-            Order dispatchorder = orders.get(index);//ÀÎµ¦½º¸¦ ¿Ã·Á°¡¸ç ÁÖ¹®À» ²¨³½´Ù.
-            AreaOrders AreaOrdersE=Area.contents.get(dispatchorder.address);//ÁÖ¹®ÀÇ ÁÖ¼Ò ¼Ó¼ºÀ» ÀÌ¿ëÇØ ÇØ½¬¸Ê¿¡¼­ ÇØ´ç ÁÖ¼Ò¸¦ Ã£Àº µÚ °ªÀ» ¹İÈ¯
-            if (AreaOrdersE.storage+dispatchorder.totalvolume<=Area.maxstorage) {//Å©±â ºñ±³
+            Order dispatchorder = orders.get(index);//ì¸ë±ìŠ¤ë¥¼ ì˜¬ë ¤ê°€ë©° ì£¼ë¬¸ì„ êº¼ë‚¸ë‹¤.
+            AreaOrders AreaOrdersE=Area.contents.get(dispatchorder.address);//ì£¼ë¬¸ì˜ ì£¼ì†Œ ì†ì„±ì„ ì´ìš©í•´ í•´ì‰¬ë§µì—ì„œ í•´ë‹¹ ì£¼ì†Œë¥¼ ì°¾ì€ ë’¤ ê°’ì„ ë°˜í™˜
+            if (AreaOrdersE.storage+dispatchorder.totalvolume<=Area.maxstorage) {//í¬ê¸° ë¹„êµ
                 AreaOrdersE.storage+=dispatchorder.totalvolume;
                 AreaOrdersE.orders.add(dispatchorder);
             }
             else {
                 WaitingOrder.stack.add(dispatchorder);
             }
-            orders.remove(index);//ÁÖ¹®ÀÌ ¿Å°ÜÁ³À¸¹Ç·Î ±âÁ¸ Å¬·¡½º¿¡ ÀûÀçµÈ ÁÖ¹®Àº »èÁ¦
+            orders.remove(index);//ì£¼ë¬¸ì´ ì˜®ê²¨ì¡Œìœ¼ë¯€ë¡œ ê¸°ì¡´ í´ë˜ìŠ¤ì— ì ì¬ëœ ì£¼ë¬¸ì€ ì‚­ì œ
             index++;
         }
     }
-    public void PickupStack() {//½ºÅÃ¿¡ ½×ÀÎ ÁÖ¹®µéÀ» ´Ù½Ã ²¨³»¾î pickuporder¿Í ºñ½ÁÇÑ ¹æ½ÄÀ¸·Î ¼öÇàÇÏ´Â ÇÔ¼ö. ¸¸¾à¿¡ ¿©ÀüÈ÷ Æ®·°ÀÇ ¿ë·®ÀÌ Â÷ÀÖ´Ù¸é ÇØ´ç ÁÖ¹®À» ´Ù½Ã ½ºÅÃÀÇ ÃÖÇÏ´Ü¿¡ ÀûÀç
+    public void PickupStack() {//ìŠ¤íƒì— ìŒ“ì¸ ì£¼ë¬¸ë“¤ì„ ë‹¤ì‹œ êº¼ë‚´ì–´ pickuporderì™€ ë¹„ìŠ·í•œ ë°©ì‹ìœ¼ë¡œ ìˆ˜í–‰í•˜ëŠ” í•¨ìˆ˜. ë§Œì•½ì— ì—¬ì „íˆ íŠ¸ëŸ­ì˜ ìš©ëŸ‰ì´ ì°¨ìˆë‹¤ë©´ í•´ë‹¹ ì£¼ë¬¸ì„ ë‹¤ì‹œ ìŠ¤íƒì˜ ìµœí•˜ë‹¨ì— ì ì¬
         while (!WaitingOrder.stack.empty()) {
             Order stackOrder = WaitingOrder.stack.pop();
             AreaOrders AreaOrdersE=Area.contents.get(stackOrder.address);
@@ -57,15 +60,14 @@ class Pickup {
             }
         }
     }
-    public void SendOrder() {//ÅÃ¹èÀÇ ¿ë·®ÀÇ 70ÆÛ¼¾Æ®°¡ Ã¤¿öÁ³°í ÁÖ¹®ÀÇ °³¼ö°¡ 10°ÇÀÌ ³Ñ´Â´Ù¸é »óÂ÷. -> ¹«°Ô¸¦ ºÎÇÇ·Î ¹Ù²Ù¾úÀ¸¹Ç·Î ÀÌ Á¶°Çµµ ÃßÈÄ ¹Ù²Ü ¿¹Á¤
+    public void SendOrder() {//íƒë°°ì˜ ìš©ëŸ‰ì˜ 70í¼ì„¼íŠ¸ê°€ ì±„ì›Œì¡Œê³  ì£¼ë¬¸ì˜ ê°œìˆ˜ê°€ 10ê±´ì´ ë„˜ëŠ”ë‹¤ë©´ ìƒì°¨. -> ë¬´ê²Œë¥¼ ë¶€í”¼ë¡œ ë°”ê¾¸ì—ˆìœ¼ë¯€ë¡œ ì´ ì¡°ê±´ë„ ì¶”í›„ ë°”ê¿€ ì˜ˆì •
         AreaOrders order;
         for (String s: Area.destination) {
             order=Area.contents.get(s);
             if (order.storage>=Area.maxstorage*0.7 && order.orders.size()>10) {
-                order.storage=0;//ÀúÀå°ø°£À» 0À¸·Î ÇÏ°í ÃÊ±âÈ­
+                order.storage=0;//ì €ì¥ê³µê°„ì„ 0ìœ¼ë¡œ í•˜ê³  ì´ˆê¸°í™”
                 order.orders.clear();
             }
         }  
     }
 }
-

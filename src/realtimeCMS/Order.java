@@ -1,6 +1,6 @@
 package realtimeCMS; // Real-Time Courier Monitoring System
 import java.lang.String;
-import java.util.*;
+//import java.util.*;
 
 class State {
     static String process[] = {"품절됨", "주문됨", "작업중", "적재됨", "배송됨"};
@@ -12,7 +12,7 @@ class Order extends State {
     String productName; // 상품명
     int quantity; // 주문수량
     String address; // 배송주소
-    double totalvolume; // 총 부피[kg] = 상품부피 X 주문수량 == 적재량
+    int totalvolume; // 총 부피[kg] = 상품부피 X 주문수량 == 적재량
     boolean rocketDelivery; // 로켓배송여부
     String orderState; // 주문상태
     int count; // process의 인덱스를 변경시키는 변수
@@ -20,7 +20,7 @@ class Order extends State {
         this.orderNumber = orderNumber;
         this.key = key;    
         this.productName = store.inventory.get(key).productName;
-        this.quantity = store.inventory.get(key).quantity;
+        this.quantity = Main.probability(31);
         this.address = address;
         this.totalvolume = ( store.inventory.get(key).volume )*(this.quantity);
         this.rocketDelivery = rocketDelivery;
@@ -35,6 +35,6 @@ class Order extends State {
         return orderState = State.process[--count];
     }
     public void printState() { // 주문된 상품정보 출력
-        System.out.println("order"+orderNumber+"|key"+key+"|"+productName+"|"+quantity+"개|"+address+"|"+totalvolume+"L|"+rocketDelivery+"|"+orderState);
+        System.out.printf("order%3d | key%4d | %s | %2d개 | %s | %4dL | %3s | %b\n", orderNumber, key, productName, quantity, address, totalvolume, orderState, rocketDelivery);
     }
 }

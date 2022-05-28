@@ -1,40 +1,40 @@
 package realtimeCMS;
 import java.util.*;
-//´ë±â ÀúÀå°ø°£: hashmap("»óÇ°ÀÌ¸§", "ÁÖ¹®°´Ã¼ ·¹ÆÛ·±½º")
-class Define {//c¾ğ¾îÀÇ #define°ú °°Àº °³³ä. ·ÎÄÏ ¹è¼ÛÀº ±âº» Áö¿¬½Ã°£ 1, ¾Æ´Ñ ¹è¼ÛÀº 2·Î ¼³Á¤
+//ëŒ€ê¸° ì €ì¥ê³µê°„: hashmap("ìƒí’ˆì´ë¦„", "ì£¼ë¬¸ê°ì²´ ë ˆí¼ëŸ°ìŠ¤")
+class Define {//cì–¸ì–´ì˜ #defineê³¼ ê°™ì€ ê°œë…. ë¡œì¼“ ë°°ì†¡ì€ ê¸°ë³¸ ì§€ì—°ì‹œê°„ 1, ì•„ë‹Œ ë°°ì†¡ì€ 2ë¡œ ì„¤ì •
     public static final int DefaultTime =2;
     public static final int RoketDefaultTime =1;
 }
-class PrepareData { //±âº» µ¥ÀÌÅÍ ¼Ó¼º. Áö¿¬½Ã°£°ú ÁÖ¹®À» °¡Áü.
+class PrepareData { //ê¸°ë³¸ ë°ì´í„° ì†ì„±. ì§€ì—°ì‹œê°„ê³¼ ì£¼ë¬¸ì„ ê°€ì§.
     int relatedtime;
     Order order;
 }
 
 
 class Prepare {
-    private static Queue<PrepareData> tem = new LinkedList<PrepareData>();//Ã³¸®°¡ Áö¿¬µÈ ÁÖ¹®µéÀ» ³Ö±â À§ÇØ ÀÓ½Ã Å¥ ±¸Çö
-    PrepareData element;//±âº» µ¥ÀÌÅÍ ¼Ó¼º 
-    Prepare(Order order){//°´Ã¼ »ı¼º°ú µ¿½Ã¿¡ °´Ã¼ÀÇ Áö¿¬½Ã°£ °è»ê, Áö¿¬½Ã°£ °è»ê ¹æ¹ı: Áö¿¬½Ã°£ =  ±âº» Áö¿¬½Ã°£ 1+ ¼ö·®/3 +¹«°Ô/5
+    private static Queue<PrepareData> tem = new LinkedList<PrepareData>();//ì²˜ë¦¬ê°€ ì§€ì—°ëœ ì£¼ë¬¸ë“¤ì„ ë„£ê¸° ìœ„í•´ ì„ì‹œ í êµ¬í˜„
+    PrepareData element;//ê¸°ë³¸ ë°ì´í„° ì†ì„± 
+    Prepare(Order order){//ê°ì²´ ìƒì„±ê³¼ ë™ì‹œì— ê°ì²´ì˜ ì§€ì—°ì‹œê°„ ê³„ì‚°, ì§€ì—°ì‹œê°„ ê³„ì‚° ë°©ë²•: ì§€ì—°ì‹œê°„ =  ê¸°ë³¸ ì§€ì—°ì‹œê°„ 1+ ìˆ˜ëŸ‰/3 +ë¬´ê²Œ/5
         element=new PrepareData();
         this.element.order = order;
         this.element.relatedtime= (order.rocketDelivery? Define.RoketDefaultTime : Define.DefaultTime) + (int)order.totalvolume/5;
         tem.add(this.element);
     }
-    public void SwitchState(){//Å¥°¡ ºô¶§±îÁö ºĞ·ùÀÛ¾÷¿¡ ´ë±âÁßÀÎ ÁÖ¹®À» ³Ñ±ä´Ù. ¸¸¾à µµÁß¿¡ Ã³¸® ¿ë·®(4)°¡ ¿À¹öµÇ¸é ¹İº¹¹®À» Á¾·áÇÏ°í ³ª¸ÓÁö ÁÖ¹®Àº ±×´ë·Î Å¥¿¡ ³²°Ô µÈ´Ù.
+    public void SwitchState(){//íê°€ ë¹Œë•Œê¹Œì§€ ë¶„ë¥˜ì‘ì—…ì— ëŒ€ê¸°ì¤‘ì¸ ì£¼ë¬¸ì„ ë„˜ê¸´ë‹¤. ë§Œì•½ ë„ì¤‘ì— ì²˜ë¦¬ ìš©ëŸ‰(4)ê°€ ì˜¤ë²„ë˜ë©´ ë°˜ë³µë¬¸ì„ ì¢…ë£Œí•˜ê³  ë‚˜ë¨¸ì§€ ì£¼ë¬¸ì€ ê·¸ëŒ€ë¡œ íì— ë‚¨ê²Œ ëœë‹¤.
         while(!tem.isEmpty()){
             if(!Classification.AddOrder(tem.remove()))
                 break;          
         }
-        //ÀÌ °úÁ¤ÀÌ ³¡ÀÌ ³ª¸é »óÅÂ°¡ º¯°æµÈ »óÇ° ¸ñ·ÏÀ» printÇÏ´Â ÇÔ¼ö¸¦ ±¸ÇöÇÒ °èÈ¹
+        //ì´ ê³¼ì •ì´ ëì´ ë‚˜ë©´ ìƒíƒœê°€ ë³€ê²½ëœ ìƒí’ˆ ëª©ë¡ì„ printí•˜ëŠ” í•¨ìˆ˜ë¥¼ êµ¬í˜„í•  ê³„íš
     }
 }
 
-class Classification{//ºĞ·ùÀÛ¾÷ Å¬·¡½ºee
+class Classification{//ë¶„ë¥˜ì‘ì—… í´ë˜ìŠ¤ee
     
-    private static ArrayList<PrepareData> ClassifyingOrder = new ArrayList<PrepareData>(4);//arraylist¿¡ ÇöÀç ºĞ·ùÀÛ¾÷ÁßÀÎ ÁÖ¹®µéÀ» ³Ö´Â´Ù.
+    private static ArrayList<PrepareData> ClassifyingOrder = new ArrayList<PrepareData>(4);//arraylistì— í˜„ì¬ ë¶„ë¥˜ì‘ì—…ì¤‘ì¸ ì£¼ë¬¸ë“¤ì„ ë„£ëŠ”ë‹¤.
     private static ArrayList<Order> ReturnOrder = new ArrayList<Order>();
 
-    public static boolean AddOrder(PrepareData delayorder){//¸®½ºÆ®ÀÇ ¿ë·®ÀÌ ÃÊ°úµÇÁö ¾Ê´Â´Ù¸é µ¥ÀÌÅÍ¸¦ ³Ö°í Âü°ªÀ» ¹İÈ¯ÇÑ´Ù.
+    public static boolean AddOrder(PrepareData delayorder){//ë¦¬ìŠ¤íŠ¸ì˜ ìš©ëŸ‰ì´ ì´ˆê³¼ë˜ì§€ ì•ŠëŠ”ë‹¤ë©´ ë°ì´í„°ë¥¼ ë„£ê³  ì°¸ê°’ì„ ë°˜í™˜í•œë‹¤.
         if(ClassifyingOrder.size()!=4){
             ClassifyingOrder.add(delayorder);
             return true;
@@ -43,8 +43,8 @@ class Classification{//ºĞ·ùÀÛ¾÷ Å¬·¡½ºee
            return false;
     }
     
-    public static ArrayList<Order> CompleteClassfication(){//¸®½ºÆ®¿¡¼­ ÇÏ³ª¾¿ ²¨³» Áö¿¬½Ã°£¿¡ -1À» ÇÑ ÈÄ, Áö¿¬½Ã°£ÀÌ 0ÀÌ¸é ¹İÈ¯ÇÒ ¸®½ºÆ®¿¡ ³Ö°í ¾Æ´Ï¸é ´Ù½Ã ºĞ·ùÀÛ¾÷ ¸®½ºÆ®¿¡ ³Ö´Â´Ù. ¸ğµç ÁÖ¹®À»
-                                                           //´Ù µ¹¸é ¸®½ºÆ®·Î ÇÑ²¨¹ø¿¡ ¹İÈ¯ÇÑ´Ù. ¸ŞÀÎ¿¡¼­ ÀÌ¸¦ ¾î¶»°Ô »ç¿ëÇÒÁö ¾ÆÁ÷ Àß ¸ğ¸£°Ú¾î¼­ ÀÏ´ÜÀº ÀÌ·¸°Ô ¸¸µé¾ú½À´Ï´Ù.
+    public static ArrayList<Order> CompleteClassfication(){//ë¦¬ìŠ¤íŠ¸ì—ì„œ í•˜ë‚˜ì”© êº¼ë‚´ ì§€ì—°ì‹œê°„ì— -1ì„ í•œ í›„, ì§€ì—°ì‹œê°„ì´ 0ì´ë©´ ë°˜í™˜í•  ë¦¬ìŠ¤íŠ¸ì— ë„£ê³  ì•„ë‹ˆë©´ ë‹¤ì‹œ ë¶„ë¥˜ì‘ì—… ë¦¬ìŠ¤íŠ¸ì— ë„£ëŠ”ë‹¤. ëª¨ë“  ì£¼ë¬¸ì„
+                                                           //ë‹¤ ëŒë©´ ë¦¬ìŠ¤íŠ¸ë¡œ í•œêº¼ë²ˆì— ë°˜í™˜í•œë‹¤. ë©”ì¸ì—ì„œ ì´ë¥¼ ì–´ë–»ê²Œ ì‚¬ìš©í• ì§€ ì•„ì§ ì˜ ëª¨ë¥´ê² ì–´ì„œ ì¼ë‹¨ì€ ì´ë ‡ê²Œ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤.
         int index=0;
         PrepareData temp; 
         if(ReturnOrder.size()!=0)
@@ -63,4 +63,4 @@ class Classification{//ºĞ·ùÀÛ¾÷ Å¬·¡½ºee
 
     }
     }
-    //ÃßÈÄ ÇÊ¿äÇÑ ºÎºĞ ´õ Ãß°¡ÇÒ ¿¹Á¤...ÇÇ°ïÇØ¼­ ´õ ÀÌ»ó ÄÚµùÀº ¹«¸®...
+    //ì¶”í›„ í•„ìš”í•œ ë¶€ë¶„ ë” ì¶”ê°€í•  ì˜ˆì •...í”¼ê³¤í•´ì„œ ë” ì´ìƒ ì½”ë”©ì€ ë¬´ë¦¬...
