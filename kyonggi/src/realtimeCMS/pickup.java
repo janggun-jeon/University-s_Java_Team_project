@@ -7,7 +7,7 @@ import java.util.*;
 class Area{  //택배 발송 지역 지정 클래스.  main에서 한번만 생성할 예정.
     public static final int maxstorage = 1000;
     public static HashMap<String,AreaOrders > contents = new HashMap<String,AreaOrders>();
-    public static final String[] destination = {"지역1","지역2", "지역3", "지역4", "지역5", "지역6", "지역7", "지역8", "지역9"};//지역 종류는 나중에 지정
+    public static final String[] destination = {"강서","관악", "송파", "성북", "용산", "강북", "서초", "강남", "종로", "마포"};//지역 종류는 나중에 지정
     Area(){
         for(String s: destination){
             contents.put(s,new AreaOrders());
