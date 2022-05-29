@@ -69,19 +69,18 @@ class ToolsForPickingup{
     public void PickupOrder(ArrayList<Order> orders){// Area 클래스의 지역 택배 데이터를 불러온 뒤 무게 비교를 통해 들어온 주문들을 area클래스의 content에 저장할지, 대기 스택에 저장할지 판별
         int index=0;
         while(!orders.isEmpty()){
-            Order dispatchorder = orders.get(index);//인덱스를 올려가며 주문을 꺼낸다.
+            Order dispatchorder = orders.get(index);// 먼저 대기된 주문부터 꺼낸다
             AreaOrders AreaOrdersE=Area.contents.get(dispatchorder.address);//주문의 주소 속성을 이용해 해쉬맵에서 해당 주소를 찾은 뒤 값을 반환
             if(AreaOrdersE.storage+dispatchorder.totalvolume<=Area.maxstorage){//크기 비교
                 AreaOrdersE.storage+=dispatchorder.totalvolume;
                 AreaOrdersE.orders.add(dispatchorder);
-
+                dispatchorder.printState();
             }
             else
             {
                 PickUp.TempSpace.addLast(dispatchorder);
             }
-            orders.remove(index);//주문이 옮겨졌으므로 기존 클래스에 적재된 주문은 삭제
-            index++;
+            orders.remove(index);//주문이 옮겨졌으므로 기존 클래스에 적재된 주문링크는 제거
         }
     }
 
@@ -99,13 +98,16 @@ class ToolsForPickingup{
         }
     }
 
+
+
     public void SendOrder(){//택배의 용량의 70퍼센트가 채워졌고 주문의 개수가 10건이 넘는다면 상차. -> 무게를 부피로 바꾸었으므로 이 조건도 추후 바꿀 예정
-        AreaOrders order;
+        AreaOrders Aorder;
         for(String s: Area.destination){
-            order=Area.contents.get(s);
-            if(order.storage>=Area.maxstorage*0.7 && order.orders.size()>10){
-                order.storage=0;//저장공간을 0으로 하고 초기화
-                order.orders.clear();
+            Aorder=Area.contents.get(s);
+            if(Aorder.storage>=Area.maxstorage*0.8){
+                Aorder.storage=0;//저장공간을 0으로 하고 초기화
+                Aorder.orders.clear();
+                System.out.print("배송출발[" + s + "] ");
             }
         }  
         

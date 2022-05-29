@@ -20,13 +20,14 @@ class Order extends State {
         this.orderNumber = orderNumber;
         this.key = key;    
         this.productName = store.inventory.get(key).productName;
-        this.quantity = Main.probability(31);
+        this.quantity = Main.probability(100);
         this.address = address;
         this.totalvolume = ( store.inventory.get(key).volume )*(this.quantity);
         this.rocketDelivery = rocketDelivery;
         this.count = 1;
         this.orderState = State.process[count];
         printState();
+        Main.best[this.key - 1]++;
     }
     public String nextState() { // 다음 주문상태로 전환
         return orderState = State.process[++count];       
@@ -35,6 +36,6 @@ class Order extends State {
         return orderState = State.process[--count];
     }
     public void printState() { // 주문된 상품정보 출력
-        System.out.printf("order%3d | key%4d | %s | %2d개 | %s | %5dL | %3s | %b\n", orderNumber, key, productName, quantity, address, totalvolume, orderState, rocketDelivery);
+        System.out.printf("order%4d | key%4d | %s | %2d개 | %s | %5dL | %3s | %b\n", orderNumber, key, productName, quantity, address, totalvolume, orderState, rocketDelivery);
     }
 }
