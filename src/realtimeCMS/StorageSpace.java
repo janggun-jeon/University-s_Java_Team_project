@@ -125,14 +125,14 @@ class StorageSpace { // 창고공간
     public boolean shipment(Order ord) { // 출하
         if (inventory.get(ord.key).quantity > ord.quantity) { // 재고수량 >= 주문수량
             inventory.get(ord.key).quantity -= ord.quantity; // 재고 삭감
-            ord.nextState(); // 출하됨 출력
+            ord.nextState(); // 주문상태 변경
             if (inventory.get(ord.key).quantity == 0) { // 재고가 0
                 queue.add(inventory.get(ord.key)); // 발주 대기열에 상품정보를 추가
             }
             return true; // 출하성공
         }
         else { // 재고부족
-            ord.sold_out(); // 품절됨 출력
+            ord.sold_out(); // 주문상태 변경
             queue.add(inventory.get(ord.key));
             return false; // 출하실패
         }

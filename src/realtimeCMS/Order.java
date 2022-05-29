@@ -3,7 +3,7 @@ import java.lang.String;
 //import java.util.*;
 
 class State {
-    static String process[] = {"품절됨", "주문됨", "작업중", "적재됨", "배송됨"};
+    static String process[] = {"품절됨", "주문됨", "출하중", "작업중", "적재됨", "배송됨"};
 }
 
 class Order extends State {
@@ -35,6 +35,6 @@ class Order extends State {
         return orderState = State.process[--count];
     }
     public void printState() { // 주문된 상품정보 출력
-        System.out.printf("order%3d | key%4d | %s | %2d개 | %s | %4dL | %3s | %b\n", orderNumber, key, productName, quantity, address, totalvolume, orderState, rocketDelivery);
+        System.out.printf("order%3d | key%4d | %s | %2d개 | %s | %5dL | %3s | %b\n", orderNumber, key, productName, quantity, address, totalvolume, orderState, rocketDelivery);
     }
 }

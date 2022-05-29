@@ -16,26 +16,53 @@ public class Main {
         LinkedList<Order> orderQue = new LinkedList<Order>(); // 생성된 주문에 대한 대기열
         LinkedList<Order> requestQue = new LinkedList<Order>(); // orderQue에 order들을 다음 사이클때 출하하기 전에 현재 사이클에 저장하기 위한 대기열
         ReceivedSpace received = new ReceivedSpace(100, 10) ; // 납품공간 클래스 객체
+        Classify process = new Classify(); // 작업공간 클래스 객체
 
     do {
         System.out.printf("\n경과시간 : %d\n\n", time); // 경과시간 : time
         
-        System.out.println("<입고목록>\n상품명 | 발주량 | 파손량 | 입고량");
+        System.out.println("\n<집품&포장>\n대기시간 | 주문번호 | 상품고유번호 | 상품명 | 수량 | 주소 | 적재부피 | 주문상태 | 로켓배송");
+        {
+            process.TFC.ChangeState();
+            Iterator <ClassifyData> it = Classify.ClassifyingOrder.iterator();
+            while (it.hasNext()) {
+                ClassifyData data = it.next();
+                System.out.print(data.relatedtime+"시간 | "); data.order.printState();
+            }
+            process.TFC.ClassifyOrders();
+        }
+
+
+
+
+
+        System.out.println("\n<입고목록>\n상품명 | 발주량 | 파손량 | 입고량");
         {
             received.receive(stock.request()); 
         }
 
-        System.out.println("\n<품절주문목록>\n주문번호 | 상품고유번호 | 상품명 | 수량 | 주소 | 적재부피 | 주문상태 | 로켓배송");
+        System.out.println("\n<품절주문>\n주문번호 | 상품고유번호 | 상품명 | 수량 | 주소 | 적재부피 | 주문상태 | 로켓배송");
         { // 이전 타임의 주문된 order들을 먼저 현재 타임에 출하시도 후에 새 주문 접수
             Iterator <Order> it = requestQue.iterator(); // requestQue의 order들을 출하하기 위해 블록에서만 사용될 Iterator 참조를 선언해줌
             while(it.hasNext()) {
                 Order order = it.next();
-                stock.shipment(order) ;
+                Boolean shipment = stock.shipment(order) ;
                 if (order.count <= 0) { // 품절된 경우
                     order.printState(); // 품절상태 출력
                 }
+                if (shipment) {
+                    process.AddTempOrders(order); // 출하
+                }
             }
             requestQue.clear(); // 객체의 삭제가 아닌 arraylist와 내부객체들의 연결을 삭제
+        }
+
+        System.out.println("\n<출하목록>\n주문번호 | 상품고유번호 | 상품명 | 수량 | 주소 | 적재부피 | 주문상태 | 로켓배송");
+        {   
+            Iterator <ClassifyData> it = Classify.noneClassifiedOrders.iterator();
+            while (it.hasNext()) {
+                it.next().order.printState();
+            }
         }
 
         System.out.println("\n<신규주문>\n주문번호 | 상품고유번호 | 상품명 | 수량 | 주소 | 적재부피 | 주문상태 | 로켓배송");
@@ -55,8 +82,25 @@ public class Main {
             }
             orderQue.clear(); // 객체의 삭제가 아닌 arraylist와 내부객체들의 연결을 삭제
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         System.out.println();
-    } while (time++ < 16);
+    } while (time++ < 8);
         
     }    
 }
