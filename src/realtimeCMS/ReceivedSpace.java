@@ -1,5 +1,5 @@
 package realtimeCMS; // Real-Time Courier Monitoring System
-import java.lang.String;
+//import java.lang.String;
 import java.util.*;
 
 class ReceivedSpace { // 납품공간

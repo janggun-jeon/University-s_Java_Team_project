@@ -17,7 +17,7 @@ public class Main {
         StorageSpace stock = new StorageSpace(); // 창고공간 클래스 객체
         LinkedList<Order> orderQue = new LinkedList<Order>(); // 생성된 주문에 대한 대기열
         LinkedList<Order> requestQue = new LinkedList<Order>(); // orderQue에 order들을 다음 사이클때 출하하기 전에 현재 사이클에 저장하기 위한 대기열
-        ReceivedSpace received = new ReceivedSpace(100, 10) ; // 납품공간 클래스 객체
+        ReceivedSpace received = new ReceivedSpace(100, 34) ; // 납품공간 클래스 객체
         Classify process = new Classify(); // 작업공간 클래스 객체
         PickUp pick = new PickUp(); // 배차공간 클래스 객체
 

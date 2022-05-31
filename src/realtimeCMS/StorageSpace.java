@@ -6,6 +6,7 @@ class product { // 상품정보
     String productName; // 상품명
     int quantity; // 재고수량
     int volume; // 상품부피[L], 1개당
+
     public product(String productName, int quantity, int volume) {
         this.productName = productName;
         this.quantity = quantity;
@@ -14,9 +15,9 @@ class product { // 상품정보
 }
 
 class StorageSpace { // 창고공간 
-    
-    HashMap<Integer, product> inventory = new HashMap<Integer, product>(); // 재고를 고유식별번호[=key]로 관리할 자료구조
-    LinkedList<product> queue = new LinkedList<product>(); // 발주할 product들의 대기열
+    HashMap <Integer, product> inventory = new HashMap <Integer, product> (); // 재고를 고유식별번호[=key]로 관리할 자료구조
+    LinkedList <product> queue = new LinkedList <product> (); // 발주할 product들의 대기열
+
     public StorageSpace() {
         inventory.put(1, new product("             [표백제]", 100, 2));
         inventory.put(2, new product("           [주방세제]", 100, 1));
@@ -119,6 +120,7 @@ class StorageSpace { // 창고공간
         inventory.put(99, new product("[웹프로그래밍 입문서]", 100, 1));
         inventory.put(100, new product("    [자료구조 입문서]", 100, 1));
     }
+
     public LinkedList<product> request() { // 발주
         return this.queue; // 납품공간에 발주할 상품정보의 리스트를 반환
     }
@@ -127,7 +129,7 @@ class StorageSpace { // 창고공간
             inventory.get(ord.key).quantity -= ord.quantity; // 재고 삭감
             ord.nextState(); // 주문상태 변경
             if (inventory.get(ord.key).quantity == 0) { // 재고가 0
-                queue.add(inventory.get(ord.key)); // 발주 대기열에 상품정보를 추가
+                queue.add( inventory.get(ord.key) ); // 발주 대기열에 상품정보를 추가
             }
             return true; // 출하성공
         }
