@@ -55,6 +55,7 @@ class ToolsForPickingup{
             if(AreaOrdersE.storage+queueOrder.totalvolume<=Area.maxstorage){
                 AreaOrdersE.storage+=queueOrder.totalvolume;
                 AreaOrdersE.orders.add(queueOrder);
+                queueOrder.printState();
             }
             else{
                 PickUp.TempSpace.add(queueOrder);
@@ -62,14 +63,14 @@ class ToolsForPickingup{
             }
         }
     }
-    public void SendOrder() { // 택배의 용량의 70퍼센트가 채워졌고 주문의 개수가 10건이 넘는다면 상차. -> 무게를 부피로 바꾸었으므로 이 조건도 추후 바꿀 예정
+    public void SendOrder() { 
         AreaOrders Aorder;
         for (String s: Area.destination) {
             Aorder=Area.contents.get(s);
-            if (Aorder.storage>=Area.maxstorage*0.8) {
+            if (Aorder.storage>=Area.maxstorage*0.9) {
                 Aorder.storage=0; // 저장공간을 0으로 하고 초기화
                 Aorder.orders.clear();
-                System.out.print("배송출발[" + s + "] \n");
+                System.out.print("배송출발[" + s + "]\n");
             }
         }  
     }

@@ -2,8 +2,6 @@ package realtimeCMS; // Real-Time Courier Monitoring System
 import java.lang.String;
 import java.util.*;
 
-
-
 public class Main {
     static int[] best = new int[100];
     public static int probability(int n) { // (n >= 2)인 정수
@@ -12,7 +10,7 @@ public class Main {
 
     public static void main(String [] args) {
         int time = 0; // 경과시간
-        int orderRate = 10; // 분당 주문률[0 ~ 100 중 하나의 정수 : %], 나중에 사용자 입력이 가능할 수 있는 요소
+        int orderRate = 30; // 분당 주문률[0 ~ 100 중 하나의 정수 : %], 나중에 사용자 입력이 가능할 수 있는 요소
         int ordercount = 1; // 주문번호에 해당
         StorageSpace stock = new StorageSpace(); // 창고공간 클래스 객체
         LinkedList<Order> orderQue = new LinkedList<Order>(); // 생성된 주문에 대한 대기열
@@ -40,12 +38,11 @@ public class Main {
                 System.out.println();
             }
             pick.TFP.SendOrder();
-
-            pick.TFP.TransferTempSpaceToAreaOrder();
         }
         
         System.out.println("\n<상하차>\n주문번호 | 상품고유번호 | 상품명 | 수량 | 주소 | 적재부피 | 주문상태 | 로켓배송");
-        {
+        {   
+            pick.TFP.TransferTempSpaceToAreaOrder();
             pick.TFP.PickupOrder(process.TFC.ClassifyOrders()); 
         }
 
