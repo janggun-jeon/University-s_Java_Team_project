@@ -68,7 +68,7 @@ class ToolsForPickingup{
         System.out.println("<배송출발>------------------------------           ");
         for (String s: Area.destination) {
             Aorder=Area.contents.get(s);
-            if (Aorder.storage>=SetUp.truckcapacity*SetUp.sendstandard) {
+            if ((float)Aorder.storage>=SetUp.truckcapacity*SetUp.sendstandard) {
                 Aorder.storage=0; // 저장공간을 0으로 하고 초기화
                 Aorder.orders.clear();
                 ShowData.sumdeliver++;

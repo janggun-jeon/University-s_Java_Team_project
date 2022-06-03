@@ -5,23 +5,34 @@ import java.util.*;
 class ShowData {
     public static int[] resultorder = new int[100];
     public static int sumdeliver =0;
+
+    public int CalSum(){
+        int sum=0;
+        for(int i=0; i<100; i++){
+            sum+=resultorder[i];
+        }
+        return sum;
+    }
+
     public void PrintResult(StorageSpace stock){
         int best=0,key=-1;
         System.out.println("[각 상품 주문 횟수 | 주문 합 | 인기 상품]  ");
         System.out.println("<각 주문 생성 횟수>");
         for(int i=0; i<100; i++){
-            if(i%4==0){
+            if(i%5==0){
                 System.out.print("\n| ");
             }
-            System.out.print("              "+stock.inventory.get(i + 1).productName+": "+resultorder[i]+" |");
+            System.out.printf("%s: %3d|",stock.inventory.get(i + 1).productName,resultorder[i]);
+           //System.out.print("              "+stock.inventory.get(i + 1).productName+": "+resultorder[i]+" |");
             if (best < resultorder[i]) {
                 best = resultorder[i];
                 key = i;
             } 
         }
-        System.out.println("<주문 합: "+Main.ordercount+" >");
+        System.out.println();
+        System.out.println("<주문 합: "+CalSum()+" >");
         System.out.println("<인기상품: " + stock.inventory.get(key + 1).productName+" >");
-        System.out.printf("<시간당 평균 생성 주문:%03.f >\n", Main.ordercount/SetUp.setuptime);
+        System.out.printf("<시간당 평균 생성 주문:%.03f >\n", ((float)CalSum())/SetUp.setuptime);
         System.out.println("<총 배달 수:"+ sumdeliver+" >");
     }
 }
@@ -41,9 +52,9 @@ class SetUp{
         setuptime= sc.nextInt()==1? 24:168;
         System.out.print("[배송트럭 용량]- 15000: 1 입력| 25000: 나머지 입력 >>");
         truckcapacity= sc.nextInt()==1? 15000:25000;
-        System.out.print("[배송 시작 임계값] >>");
+        System.out.print("[배송 기준 용량 가중치] >>");
         sendstandard= sc.nextFloat();
-        System.out.print("[분당 주문률] >>");
+        System.out.print("[분당 주문률(1~100)] >>");
         orderRate=sc.nextInt();
         System.out.print("[기본 납품 개수] >>");
         basicrecievenumber= sc.nextInt();
@@ -54,7 +65,6 @@ class SetUp{
 }
 
 public class Main {
-    public static int ordercount = 1; // 주문번호에 해당
     public static int probability(int n) { // (n >= 2)인 정수
         return (int)(Math.random()*n); // 0 ~ n-1 중 하나의 값을 반환
     }
@@ -64,6 +74,7 @@ public class Main {
     }
 
     public static void main(String [] args) {
+        int ordercount = 1; // 주문번호에 해당
         int time = 0; // 경과시간
         boolean delayflag = false;
         Scanner sc = new Scanner(System.in);
@@ -165,9 +176,10 @@ public class Main {
 
 
         System.out.println();
+
         if(delayflag){
             try {
-                Thread.sleep(5);
+                Thread.sleep(1000);
             } 
             catch (InterruptedException e) {
                 System.err.format("IOException: %s%n", e);
