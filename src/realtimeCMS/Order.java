@@ -27,7 +27,7 @@ class Order extends State {
         this.count = 1;
         this.orderState = State.process[count];
         printState();
-        Main.best[this.key - 1]++;
+        ShowData.resultorder[this.key - 1]++;
     }
     
     public String nextState() { // 다음 주문상태로 전환
